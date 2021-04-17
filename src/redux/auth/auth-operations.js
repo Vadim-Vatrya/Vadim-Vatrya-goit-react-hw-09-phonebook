@@ -35,18 +35,6 @@ const register = createAsyncThunk(
     }
   );
 
-// const register = credentials => dispatch => {
-//   dispatch(authActions.registerRequest());
-//   axios
-//   .post('/users/signup', credentials)
-//   .then(({data}) => {
-//     userToken.set(data.token);
-//     dispatch(authActions.registerSuccess(data));
-//   })
-//   .catch(error => dispatch(authActions.registerError(error.message)));
-// };
-
-
 // /*
 //  * POST @ /users/login
 //  * body:
@@ -70,20 +58,6 @@ const logIn = createAsyncThunk(
   },
 );
 
-
-// const login = credentials => dispatch => {
-//   dispatch(authActions.loginRequest());
-//   axios
-//   .post('/users/logIn', credentials)
-//     .then(({ data }) => {
-//       userToken.set(data.token);
-//       dispatch(authActions.loginSuccess(data));
-//     })
-//     .catch(error => dispatch(authActions.loginError(error.message)));
-// };
-
-
-// /*
 //  * POST @ /users/logout
 //  * headers:
 //  *    Authorization: Bearer token
@@ -104,17 +78,6 @@ const logOut = createAsyncThunk(
   }
 );
 
-// const logOut = () => dispatch => {
-//   dispatch(authActions.logoutRequest());
-//   axios
-//     .post('/users/logout')
-//     .then(() => {
-//       userToken.unset();
-//       dispatch(authActions.logoutSuccess());
-//     })
-//     .catch(error => dispatch(authActions.logoutError(error.message)));
-// };
-
 // /*
 //  * GET @ /users/current
 //  * headers:
@@ -133,7 +96,7 @@ const getCurrentUser = createAsyncThunk(
     const persistedToken = state.auth.token;
 
     if (persistedToken === null) {
-        return thunkAPI.rejectWithValue();
+      return thunkAPI.rejectWithValue(5);
     }
     userToken.set(persistedToken);
     try {
@@ -143,26 +106,7 @@ const getCurrentUser = createAsyncThunk(
         return thunkAPI.rejectWithValue(error);
     }
   },
-)
-
-
-// const getCurrentUser = () => (dispatch, getState) => {
-//   const {
-//     auth: { token: persistedToken },
-//   } = getState();
-
-//   if (!persistedToken) {
-//     return;
-//   }
-//   userToken.set(persistedToken);
-//   dispatch(authActions.getCurrentUserRequest());
-//   axios
-//     .get('/users/current')
-//     .then(({ data }) => {
-//       dispatch(authActions.getCurrentUserSuccess(data));
-//     })
-//     .catch(error => dispatch(authActions.getCurrentUserError(error.message)));
-// };
+);
 
 
 /*eslint-disable*/

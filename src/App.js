@@ -4,8 +4,7 @@ import { Switch, Redirect} from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import PrivateRoute from './components/PrivateRoute';
 import PublicRoute from './components/PublicRoute';
-import authOperations from './redux/auth/auth-operations'
-import authSelectors from './redux/auth/auth-selectors';
+import { authOperations, authSelectors } from './redux/auth';
 import AppBar from './components/AppBar';
 import Container from './components/Container';
 import Loader from './components/Loader';
