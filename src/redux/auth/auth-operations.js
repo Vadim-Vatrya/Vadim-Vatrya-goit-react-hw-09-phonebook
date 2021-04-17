@@ -1,6 +1,6 @@
 import axios from 'axios';
-// import { createAsyncThunk } from '@reduxjs/toolkit';
-import authActions from './auth-actions';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+// import authActions from './auth-actions';
 
 axios.defaults.baseURL = 'https://goit-phonebook-api.herokuapp.com';
 
@@ -22,18 +22,29 @@ const userToken = {
 //  * После успешной регистрации добавляем токен в HTTP-заголовок
 //  */
 
+const register = createAsyncThunk(
+    '/users/register',
+    async (user, { rejectWithValue }) => {
+      try {
+        const {data} = await axios.post('/users/signup', user);
+        userToken.set(data.token);
+        return data;
+      } catch (error) {
+        return rejectWithValue(error);
+      }
+    }
+  );
 
-
-const register = credentials => dispatch => {
-  dispatch(authActions.registerRequest());
-  axios
-  .post('/users/signup', credentials)
-  .then(({data}) => {
-    userToken.set(data.token);
-    dispatch(authActions.registerSuccess(data));
-  })
-  .catch(error => dispatch(authActions.registerError(error.message)));
-};
+// const register = credentials => dispatch => {
+//   dispatch(authActions.registerRequest());
+//   axios
+//   .post('/users/signup', credentials)
+//   .then(({data}) => {
+//     userToken.set(data.token);
+//     dispatch(authActions.registerSuccess(data));
+//   })
+//   .catch(error => dispatch(authActions.registerError(error.message)));
+// };
 
 
 // /*
@@ -46,16 +57,30 @@ const register = credentials => dispatch => {
 
 
 
-const login = credentials => dispatch => {
-  dispatch(authActions.loginRequest());
-  axios
-  .post('/users/login', credentials)
-    .then(({ data }) => {
-      userToken.set(data.token);
-      dispatch(authActions.loginSuccess(data));
-    })
-    .catch(error => dispatch(authActions.loginError(error.message)));
-};
+const logIn = createAsyncThunk(
+  'auth/login',
+  async (user, { rejectWithValue }) => {
+      try {
+          const { data } = await axios.post('/users/login', user);
+          userToken.set(data.token);
+          return data;
+      } catch (error) {
+          return rejectWithValue(error);
+      }
+  },
+);
+
+
+// const login = credentials => dispatch => {
+//   dispatch(authActions.loginRequest());
+//   axios
+//   .post('/users/logIn', credentials)
+//     .then(({ data }) => {
+//       userToken.set(data.token);
+//       dispatch(authActions.loginSuccess(data));
+//     })
+//     .catch(error => dispatch(authActions.loginError(error.message)));
+// };
 
 
 // /*
@@ -66,16 +91,29 @@ const login = credentials => dispatch => {
 //  * 1. После успешного логаута, удаляем токен из HTTP-заголовка
 //  */
 
-const logOut = () => dispatch => {
-  dispatch(authActions.logoutRequest());
-  axios
-    .post('/users/logout')
-    .then(() => {
+
+const logOut = createAsyncThunk(
+  '/users/logout',
+  async (user, { rejectWithValue }) => {
+    try {
+      await axios.post('/users/logout', user);
       userToken.unset();
-      dispatch(authActions.logoutSuccess());
-    })
-    .catch(error => dispatch(authActions.logoutError(error.message)));
-};
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+// const logOut = () => dispatch => {
+//   dispatch(authActions.logoutRequest());
+//   axios
+//     .post('/users/logout')
+//     .then(() => {
+//       userToken.unset();
+//       dispatch(authActions.logoutSuccess());
+//     })
+//     .catch(error => dispatch(authActions.logoutError(error.message)));
+// };
 
 // /*
 //  * GET @ /users/current
@@ -88,84 +126,51 @@ const logOut = () => dispatch => {
 //  */
 
 
-const getCurrentUser = () => (dispatch, getState) => {
-  const {
-    auth: { token: persistedToken },
-  } = getState();
+const getCurrentUser = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
 
-  if (!persistedToken) {
-    return;
-  }
-  userToken.set(persistedToken);
-  dispatch(authActions.getCurrentUserRequest());
-  axios
-    .get('/users/current')
-    .then(({ data }) => {
-      dispatch(authActions.getCurrentUserSuccess(data));
-    })
-    .catch(error => dispatch(authActions.getCurrentUserError(error.message)));
-};
+    if (persistedToken === null) {
+        return thunkAPI.rejectWithValue();
+    }
+    userToken.set(persistedToken);
+    try {
+        const { data } = await axios.get('/users/current');
+        return data;
+    } catch (error) {
+        return thunkAPI.rejectWithValue(error);
+    }
+  },
+)
+
+
+// const getCurrentUser = () => (dispatch, getState) => {
+//   const {
+//     auth: { token: persistedToken },
+//   } = getState();
+
+//   if (!persistedToken) {
+//     return;
+//   }
+//   userToken.set(persistedToken);
+//   dispatch(authActions.getCurrentUserRequest());
+//   axios
+//     .get('/users/current')
+//     .then(({ data }) => {
+//       dispatch(authActions.getCurrentUserSuccess(data));
+//     })
+//     .catch(error => dispatch(authActions.getCurrentUserError(error.message)));
+// };
 
 
 /*eslint-disable*/
-export default { register, logOut, login, getCurrentUser };
-
-// const register = createAsyncThunk(
-  //   '/users/register',
-  //   async (user, { rejectWithValue }) => {
-  //     try {
-  //       const {data} = await axios.post('/users/signup', user);
-  //       userToken.set(data.token);
-  //       return data;
-  //     } catch (error) {
-  //       return rejectWithValue(error);
-  //     }
-  //   }
-  // );
+export default { register, logOut, logIn, getCurrentUser };
 
 
-// const login = createAsyncThunk(
-//   'auth/login',
-//   async (user, { rejectWithValue }) => {
-//     try {
-//       const {data} = await axios.post('/users/login', user);
-//       userToken.set(data.token);
-//       return data;
-//     } catch (error) {
-//       return rejectWithValue(error);
-//     }
-//   }
-// );
 
 
-// const logOut = createAsyncThunk(
-//   '/users/logout',
-//   async (user, { rejectWithValue }) => {
-//     try {
-//       await axios.post('/users/logout', user);
-//       userToken.unset();
-//     } catch (error) {
-//       return rejectWithValue(error);
-//     }
-//   }
-// );
 
 
-// const getCurrentUser = createAsyncThunk(
-//   'auth/refresh',
-//   async (_, thunkAPI) => {
-//     const state = thunkAPI.getState();
-//     const persistedToken = state.auth.token;
 
-//     if (persistedToken === null) {
-//         return thunkAPI.rejectWithValue();
-//     }
-//     userToken.set(persistedToken);
-//     try {
-//         const { data } = await axios.get('/users/current');
-//         return data;
-//     } catch (error) {
-//         return thunkAPI.rejectWithValue(error);
-//     }
-//   },
-// )

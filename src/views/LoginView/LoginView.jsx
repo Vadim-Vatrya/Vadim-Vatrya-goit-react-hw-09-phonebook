@@ -33,7 +33,7 @@ const LoginView = () => {
       return
     ;
 
-    dispatch(authOperations.login({ email, password }));
+    dispatch(authOperations.logIn({ email, password }));
     setEmail('');
     setPassword('');
   };
