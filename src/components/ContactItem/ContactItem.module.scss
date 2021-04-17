@@ -1,0 +1,22 @@
+.name {
+  margin-right: 10px;
+}
+
+.number {
+  color: cornflowerblue;
+  margin-right: 10px;
+  font-size: 0.9em;
+}
+
+.deleteButton {
+  background-color: #ffffff;
+  color: rgba(118, 138, 177, 0.952);
+  border: 1px solid rgb(173, 70, 70);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: red;
+  color: #ffffff;
+}
