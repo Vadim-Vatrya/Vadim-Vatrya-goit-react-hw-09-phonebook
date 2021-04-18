@@ -3,30 +3,28 @@ import * as contactsActions from '../../redux/contacts/contact-actions';
 // import { connect } from 'react-redux';
 // import styles from './Filter.module.scss';
 import { getFilter } from '../../redux/contacts/contact-selectors';
-import {createUseStyles} from 'react-jss'
+import Container from '@material-ui/core/Container';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 
-const useStyles = createUseStyles({
-    label: {
+
+const useStyles = makeStyles(theme => ({
+  find: {
+      marginTop: theme.spacing(3),
       display: 'flex',
       flexDirection: 'column',
-      fontSize: 17,
-      marginBottom: 15,
-      fontWeight: 500,
-    },
-    
-    input: {
-      padding: 2,
-      marginTop: 5,
-      maxWidth: 190,
-      height: 30,
-      outline: 'none',
-    textAlign: 'center',
-      border: ['1px', 'solid', 'gray'],
-      borderRadius: 5,
-    }
-  
-  })
+      alignItems: 'center',
+  },
 
+  typography: {
+    marginBottom: theme.spacing(2),
+  },
+
+  form: {
+      width: 320,
+  },
+}));
 
 const Filter = () => {
     const classes = useStyles();
@@ -34,18 +32,32 @@ const Filter = () => {
     const dispatch = useDispatch();
 
     return (
-        <label className={classes.label}>
-            Find contacts by name
-            <input
-                type="text"
-                className={classes.input}
-                value={value}
-                onChange={event =>
-                    dispatch(contactsActions.changeFilter(event.target.value))
-                }
-                autoComplete="off"
-            />
-        </label>
+      <Container maxWidth="sm">
+            <div className={classes.find}>
+             <Typography component="h4" variant="h6" className={classes.typography}>
+                    FIND USER
+             </Typography>
+                <form className={classes.form} autoComplete="off">
+                    <TextField
+                        variant="outlined"
+                        size="small"
+                        fullWidth
+                        type="text"
+                        value={value}
+                        className={classes.input}
+                        onChange={event =>
+                            dispatch(
+                                contactsActions.changeFilter(
+                                    event.target.value,
+                                ),
+                            )
+                            
+                        }
+                        autoComplete="off"
+                    />
+                </form>
+            </div>
+        </Container>
     );
 };
 

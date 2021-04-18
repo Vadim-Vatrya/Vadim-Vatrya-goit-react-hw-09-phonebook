@@ -5,19 +5,36 @@ import { useSelector, useDispatch } from 'react-redux';
 // import styles from './ContactForm.module.scss';
 import {addContact} from '../../redux/contacts/contact-operations';
 import { getContacts } from '../../redux/contacts/contact-selectors';
-import Button from '../Button';
+import ButtonAdd from '../Button';
 
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+// import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
-      width: '25ch',
+      width: 320,
     },
   },
+  login: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginTop: theme.spacing(2),
+  },
+
+  typography: {
+    // alignItems: 'center',
+    marginBottom: theme.spacing(2),
+  },
+
+  form: {
+    width: 320,
+  },
+
 }));
 
 export default function ContactForm() {
@@ -76,27 +93,30 @@ export default function ContactForm() {
   
     return (
         <Container maxWidth="sm">
-            <form onSubmit={handleSubmit} className={classes.form}>
-            <TextField
-            margin="normal"
-            required
-            fullWidth
-             id="name"
-             name="name"
-             label="Enter name"
-             variant="filled"
-             onChange={handleChange} />
-            <TextField
-            margin="normal"
-            required
-            fullWidth
-             id="number"
-             name="number"
-             label="Enter number"
-             variant="filled"
-             onChange={handleChange} />
-            <Button />
-        </form>
+            <div className={classes.login}>
+                
+                <form onSubmit={handleSubmit} className={classes.form}>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="name"
+                    name="name"
+                    label="Enter name"
+                    variant="filled"
+                    onChange={handleChange} />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    id="number"
+                    name="number"
+                    label="Enter number"
+                    variant="filled"
+                    onChange={handleChange} />
+                  <ButtonAdd />
+                </form>
+            </div>         
         </Container>
         
     );
