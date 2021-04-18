@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-
+import HomeIcon from '@material-ui/icons/Home';
 import authSelectors from '../../redux/auth/auth-selectors';
 
 // import styles from './Navigation.module.scss';
@@ -31,7 +31,7 @@ const Navigation = () => {
       style={style.link}
            activeStyle={style.activeLink}
       >
-        Home
+        <HomeIcon color="primary" fontSize="large"/>
       </NavLink>
       {isAuthenticated && (
         <NavLink

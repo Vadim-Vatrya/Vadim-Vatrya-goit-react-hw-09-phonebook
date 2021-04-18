@@ -20,7 +20,12 @@ const UserMenu = () => {
     <div className={styles.container}>
       <img src={userAvatar} alt="" width="30" className={styles.userAvatar} />
       <span className={styles.span}>Welcome, {name}</span>
-      <Button type="button" variant="contained" color="primary" onClick={onLogout}>
+      <Button
+        type="button"
+        variant="contained"
+        color="primary"
+        onClick={onLogout}
+        size="small">
         Logout
       </Button>
     </div>
