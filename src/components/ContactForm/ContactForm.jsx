@@ -80,8 +80,9 @@ export default function ContactForm() {
           reset();
           return;
         }
-    
-        dispatch(addContact(name, number));
+
+        const contact = { name, number };
+        dispatch(addContact(contact));
         reset();
       };
     
