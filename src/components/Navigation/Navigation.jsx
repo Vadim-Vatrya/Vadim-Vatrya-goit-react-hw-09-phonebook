@@ -19,31 +19,28 @@ const style = {
   },
 };
 
-
 const Navigation = () => {
   const isAuthenticated = useSelector(authSelectors.getIsAuthenticated);
 
   return (
     <nav>
       <NavLink
-      exact
-      to='/'
-      style={style.link}
-           activeStyle={style.activeLink}
-      >
-        <HomeIcon color="primary" fontSize="large"/>
+        exact to="/"
+        style={style.link}
+        activeStyle={style.activeLink}>
+        <HomeIcon color="primary" fontSize="large" />
       </NavLink>
       {isAuthenticated && (
         <NavLink
-        to='/contacts'
-        style={style.link}
-           activeStyle={style.activeLink}
+          to="/contacts"
+          style={style.link}
+          activeStyle={style.activeLink}
         >
           Contacts
         </NavLink>
       )}
     </nav>
-  )
-}
+  );
+};
 
 export default Navigation;

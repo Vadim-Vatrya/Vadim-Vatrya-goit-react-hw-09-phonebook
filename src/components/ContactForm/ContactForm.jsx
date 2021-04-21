@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { connect } from 'react-redux';
 
 // import styles from './ContactForm.module.scss';
-import {addContact} from '../../redux/contacts/contact-operations';
+import { addContact } from '../../redux/contacts/contact-operations';
 import { getContacts } from '../../redux/contacts/contact-selectors';
 import ButtonAdd from '../Button';
 
@@ -12,7 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 // import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
@@ -34,102 +34,88 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: 320,
   },
-
 }));
 
 export default function ContactForm() {
-    const [name, setName] = useState('');
-    const [number, setNumber] = useState('');
-    const contacts = useSelector(getContacts);
-    const dispatch = useDispatch();
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const handleChange = ({ target }) => {
-        const { name, value } = target;
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
 
-        switch (name) {
-            case 'name':
-                setName(value);
-                break;
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
 
-            case 'number':
-                setNumber(value);
-                break;
+      case 'number':
+        setNumber(value);
+        break;
 
-            default:
-                return;
-        }
-    };
+      default:
+        return;
+    }
+  };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    if (name === '') {
+      alert(`Enter name`);
+      return;
+    }
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        if (name === '') {
-          alert(`Enter name`);
-          return;
-        }
-    
-        if (number === '') {
-          alert(`Enter number`);
-          return;
-        }
-    
-        if (contacts.find(contact => contact.name === name)) {
-          alert(`${name} is already in contacts.`);
-          reset();
-          return;
-        }
+    if (number === '') {
+      alert(`Enter number`);
+      return;
+    }
 
-        const contact = { name, number };
-        dispatch(addContact(contact));
-        reset();
-      };
-    
-      const reset = () => {
-        setName('');
-        setNumber('');
-      };
+    if (contacts.find(contact => contact.name === name)) {
+      alert(`${name} is already in contacts.`);
+      reset();
+      return;
+    }
 
-  
-    return (
-        <Container maxWidth="sm">
-            <div className={classes.login}>
-                
-                <form onSubmit={handleSubmit} className={classes.form}>
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="name"
-                    name="name"
-                    label="Enter name"
-                    variant="filled"
-                    onChange={handleChange} />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="number"
-                    name="number"
-                    label="Enter number"
-                    variant="filled"
-                    onChange={handleChange} />
-                  <ButtonAdd />
-                </form>
-            </div>         
-        </Container>
-        
-    );
-}
+    const contact = { name, number };
+    dispatch(addContact(contact));
+    reset();
+  };
 
+  const reset = () => {
+    setName('');
+    setNumber('');
+  };
 
-// const mapStateToProps = state => ({
-//     contactsItems: state.contacts.items,
-// });
-
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         onSubmit: ({ name, number }) => dispatch(handleSubmit({ name, number }))
-//     }
-// };
+  return (
+    <Container maxWidth="sm">
+      <div className={classes.login}>
+        <form onSubmit={handleSubmit} className={classes.form}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            name="name"
+            label="Enter name"
+            variant="filled"
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="number"
+            name="number"
+            label="Enter number"
+            variant="filled"
+            onChange={handleChange}
+          />
+          <ButtonAdd />
+        </form>
+      </div>
+    </Container>
+  );
+};

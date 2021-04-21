@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import {  useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import authOperations from '../../redux/auth/auth-operations';
 // import styles from './LoginView.module.scss';
 import Container from '@material-ui/core/Container';
@@ -31,14 +31,11 @@ const useStyles = makeStyles(theme => ({
     alighItems: 'center',
     marginTop: theme.spacing(2),
     margin: theme.spacing(3, 0, 2),
-    width: 320
+    width: 320,
   },
-
 }));
 
-
 const LoginView = () => {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -50,24 +47,22 @@ const LoginView = () => {
     const { name, value } = event.target;
     switch (name) {
       case 'email':
-          setEmail(value);
-          break;
+        setEmail(value);
+        break;
 
       case 'password':
-          setPassword(value);
-          break;
+        setPassword(value);
+        break;
 
       default:
-          return;
-  }
+        return;
+    }
   };
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (!email || !password) 
-      return
-    ;
+    if (!email || !password) return;
 
     dispatch(authOperations.logIn({ email, password }));
     setEmail('');
@@ -77,55 +72,56 @@ const LoginView = () => {
   return (
     <Container maxWidth="sm">
       <div className={classes.login}>
-    
-      <Typography component="h2" variant="h6" className={classes.typography}>
-                    Log in User
-      </Typography>
+        <Typography component="h2" variant="h6" className={classes.typography}>
+          Log in User
+        </Typography>
 
-      
-      <form onSubmit={handleSubmit} autoComplete="off" className={classes.form}>
-        <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        type="email"
-                        id="email"
-                        label="Enter email"
-                        name="email"
-                        value={email}
-                        onChange={handleChange}
-                        autoFocus
-                    />
+        <form
+          onSubmit={handleSubmit}
+          autoComplete="off"
+          className={classes.form}
+        >
           <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        type="password"
-                        id="password"
-                        label="Enter password"
-                        name="password"
-                        value={password}
-                        onChange={handleChange}
-                    />
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            type="email"
+            id="email"
+            label="Enter email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            type="password"
+            id="password"
+            label="Enter password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
 
-       
-          <Button 
-           type="submit" 
-           variant="contained"
-           color="primary" 
-           size="large" 
-           className={classes.button} 
-           disableElevation  
-           startIcon={<CloudUploadIcon />}>
-             Login
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+            className={classes.button}
+            disableElevation
+            startIcon={<CloudUploadIcon />}
+          >
+            Login
           </Button>
-        
-      </form>
+        </form>
       </div>
     </Container>
-  )
+  );
 };
 
 export default LoginView;

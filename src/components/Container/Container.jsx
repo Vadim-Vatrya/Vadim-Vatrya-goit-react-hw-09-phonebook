@@ -20,16 +20,15 @@ const useStyles = createUseStyles({
       width: 1160,
     },
   },
-
-})
+});
 
 const Container = ({ children }) => {
-    const classes = useStyles();
-    return <div className={classes.container}>{children}</div>;
-}
-
-Container.propTypes = {
-    children: PropTypes.node,
+  const classes = useStyles();
+  return <div className={classes.container}>{children}</div>;
 };
 
-export default Container
+Container.propTypes = {
+  children: PropTypes.node,
+};
+
+export default Container;

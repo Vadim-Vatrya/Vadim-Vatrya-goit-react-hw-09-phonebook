@@ -13,6 +13,7 @@ import Loader from './components/Loader';
 // import RegisterView from './views/RegisterView';
 // import LoginView from './views/LoginView';
 
+//////////// Динамический импорт ////////////
 
 const HomeView = lazy(() =>
     import('./views/HomeView' /* webpackChunkName: "home-view" */),
@@ -39,36 +40,33 @@ const App = () => {
     }, [dispatch]);
 
     return (
-        <Container>
-
-{isFetchingCurrentUser ? (
-                <h1>Show React Skeleton</h1>
-            ) : (
-                <>
-                 <AppBar />
-                 <Suspense fallback={<Loader />} >
-                     
-                     <Switch>
-                         <PublicRoute exact path="/">
-                             <HomeView />
-                         </PublicRoute>
-                         <PrivateRoute path='/contacts'  redirectTo="/login">
-                             <ContactsView />
-                         </PrivateRoute>  
-                         <PublicRoute path="/register" restricted redirectTo="/contacts">
-                             <RegisterView />
-                         </PublicRoute> 
-                         <PublicRoute path="/login" restricted redirectTo="/contacts">
-                             <LoginView />
-                         </PublicRoute> 
-                         <Redirect to="/" />
-                     </Switch>
-                 </Suspense>
-            </>)}
-        </Container>
-        
-
-    )
+      <Container>
+        {isFetchingCurrentUser ? (
+          <h1>Show React Skeleton</h1>
+        ) : (
+          <>
+            <AppBar />
+            <Suspense fallback={<Loader />}>
+              <Switch>
+                <PublicRoute exact path="/">
+                  <HomeView />
+                </PublicRoute>
+                <PrivateRoute path="/contacts" redirectTo="/login">
+                  <ContactsView />
+                </PrivateRoute>
+                <PublicRoute path="/register" restricted redirectTo="/contacts">
+                  <RegisterView />
+                </PublicRoute>
+                <PublicRoute path="/login" restricted redirectTo="/contacts">
+                  <LoginView />
+                </PublicRoute>
+                <Redirect to="/" />
+              </Switch>
+            </Suspense>
+          </>
+        )}
+      </Container>
+    );
 };
 
 export default App;

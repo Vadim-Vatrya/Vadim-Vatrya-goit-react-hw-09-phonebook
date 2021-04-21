@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import authSelectors from '../../redux/auth/auth-selectors';
 import Navigation from '../Navigation';
@@ -9,22 +9,15 @@ import UserMenu from '../UserMenu';
 
 import styles from './AppBar.module.scss';
 
-
-
 const AppBar = () => {
-  const isAuthenticated  = useSelector(authSelectors.getIsAuthenticated );
+  const isAuthenticated = useSelector(authSelectors.getIsAuthenticated);
 
   return (
     <header className={styles.header}>
-      {/* <Container> */}
-        {/* <div className={styles.section}> */}
-        <Navigation />
-        {isAuthenticated  ? <UserMenu /> : <AuthNav />}
-        {/* </div> */}
-      {/* </Container> */}
+      <Navigation />
+      {isAuthenticated ? <UserMenu /> : <AuthNav />}
     </header>
-  )
-
-}
+  );
+};
 
 export default AppBar;

@@ -1,9 +1,9 @@
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import styles from './Loader.module.scss'
+import styles from './Loader.module.scss';
 
 const LoaderContacts = () => {
-  return(
+  return (
     <div className={styles.loading}>
       <Loader
         type="ThreeDots"
@@ -13,8 +13,7 @@ const LoaderContacts = () => {
         timeout={2000}
       />
     </div>
-  )
+  );
 };
-
 
 export default LoaderContacts;

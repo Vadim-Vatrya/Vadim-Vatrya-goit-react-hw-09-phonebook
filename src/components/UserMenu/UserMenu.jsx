@@ -2,18 +2,16 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import authSelectors from '../../redux/auth/auth-selectors';
 import authOperations from '../../redux/auth/auth-operations';
-import userAvatar from '../../images/user-avatar.svg'
+import userAvatar from '../../images/user-avatar.svg';
 import styles from './UserMenu.module.scss';
 import Button from '@material-ui/core/Button';
 
-
 const UserMenu = () => {
-
   const name = useSelector(authSelectors.getUserName);
   const dispatch = useDispatch();
 
   const onLogout = () => {
-    dispatch(authOperations.logOut())
+    dispatch(authOperations.logOut());
   };
 
   return (
@@ -25,11 +23,12 @@ const UserMenu = () => {
         variant="contained"
         color="primary"
         onClick={onLogout}
-        size="small">
+        size="small"
+      >
         Logout
       </Button>
     </div>
-  )
+  );
 };
 
 export default UserMenu;

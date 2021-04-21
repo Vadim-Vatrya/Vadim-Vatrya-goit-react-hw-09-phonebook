@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
-
 const useStyles = makeStyles(theme => ({
   login: {
     display: 'flex',
@@ -36,12 +35,9 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(3, 0, 2),
     width: 320,
   },
-
 }));
 
-
 const RegisterView = () => {
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -54,28 +50,26 @@ const RegisterView = () => {
     const { name, value } = event.target;
     switch (name) {
       case 'name':
-          setName(value);
-          break;
+        setName(value);
+        break;
 
       case 'email':
-          setEmail(value);
-          break;
+        setEmail(value);
+        break;
 
       case 'password':
-          setPassword(value);
-          break;
+        setPassword(value);
+        break;
 
       default:
-          return;
-        }
+        return;
+    }
   };
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    if (!name || !email || !password) 
-      return
-    ;
+    if (!name || !email || !password) return;
 
     dispatch(authOperations.register({ name, email, password }));
     setName('');
@@ -83,70 +77,70 @@ const RegisterView = () => {
     setPassword('');
   };
 
-
   return (
     <Container maxWidth="sm">
       <div className={classes.login}>
-      <Typography component="h2" variant="h6" className={classes.typography}>
-                    Sing up User
-      </Typography>
-      <form onSubmit={handleSubmit} autoComplete="off" className={classes.form}>
-        <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        type="name"
-                        id="name"
-                        label="Enter name"
-                        name="name"
-                        value={name}
-                        onChange={handleChange}
-                    />
-        <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        type="email"
-                        id="email"
-                        label="Enter email"
-                        name="email"
-                        value={email}
-                        onChange={handleChange}
-                        autoFocus
-                    />
+        <Typography component="h2" variant="h6" className={classes.typography}>
+          Sing up User
+        </Typography>
+        <form
+          onSubmit={handleSubmit}
+          autoComplete="off"
+          className={classes.form}
+        >
           <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        type="password"
-                        id="password"
-                        label="Enter password"
-                        name="password"
-                        value={password}
-                        onChange={handleChange}
-                    />
-        
-        <Button 
-           type="submit" 
-           variant="contained"
-           color="primary" 
-           size="large" 
-           className={classes.button} 
-           disableElevation  
-           startIcon={<CloudUploadIcon />}>
-             Sing Up
-          </Button>
-        
-      </form>
-      </div>
-      
-     
-    </Container>
-  )
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            type="name"
+            id="name"
+            label="Enter name"
+            name="name"
+            value={name}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            type="email"
+            id="email"
+            label="Enter email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            type="password"
+            id="password"
+            label="Enter password"
+            name="password"
+            value={password}
+            onChange={handleChange}
+          />
 
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            size="large"
+            className={classes.button}
+            disableElevation
+            startIcon={<CloudUploadIcon />}
+          >
+            Sing Up
+          </Button>
+        </form>
+      </div>
+    </Container>
+  );
 };
 
 export default RegisterView;
